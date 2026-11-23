@@ -1,0 +1,78 @@
+package = "theme:carrier"
+namespace = "carrier"
+templates = "templates"
+render = { page = "page.html", alias = "alias.html", graph = "graph.html", not_found = "not-found.html", social_card = { template = "social-card.html", resource_requirements = ["stylesheet:social-card", "module:social-card-media"], width = 1200, height = 630, media_selector = '.cinematic-beat:first-child .cinematic-still > [data-gazette-image-block]:first-child img', media_kind = "image" } }
+browser_theme_colors = { light = "#f1eee6", dark = "#1d1513" }
+resource_requirements = ["stylesheet:world-tokens", "font:reading", "font:reading-italic", "font:system", "font:display", "stylesheet:world", "stylesheet:cinematic-film", "image:film-grain"]
+
+[[dependencies]]
+package = "theme:base"
+
+[[resources]]
+id = "stylesheet:world-tokens"
+inputs = ["tokens/world.css"]
+build = { kind = "stylesheet", entry = "tokens/world.css" }
+
+[[resources]]
+id = "stylesheet:world"
+inputs = ["styles/world.scss", "shared/_typography.scss", "shared/_navigation.scss", "shared/_optical.scss", "tokens/scss/_layout.scss"]
+build = { kind = "stylesheet", entry = "styles/world.scss" }
+
+[[resources]]
+id = "font:reading-italic"
+inputs = ["instrument-sans-italic-latin.woff2"]
+build = { kind = "woff2-font", entry = "instrument-sans-italic-latin.woff2" }
+
+[[resources]]
+id = "font:reading"
+inputs = ["instrument-sans-latin.woff2"]
+build = { kind = "woff2-font", entry = "instrument-sans-latin.woff2" }
+
+[[resources]]
+id = "font:display"
+inputs = ["space-grotesk-latin.woff2"]
+build = { kind = "woff2-font", entry = "space-grotesk-latin.woff2" }
+
+[[resources]]
+id = "font:system"
+inputs = ["martian-mono-latin.woff2"]
+build = { kind = "woff2-font", entry = "martian-mono-latin.woff2" }
+
+[components.frame-passage]
+template = "components/frame-passage.html"
+arguments = { type = "object", additionalProperties = false }
+
+[components.frame-passage.interaction]
+module = "module:frame-passage"
+export = "mount"
+mount = "load"
+
+[[resources]]
+id = "module:frame-passage"
+inputs = ["scripts/frame-passage.js", "shared/film.mjs"]
+build = { kind = "browser-module", entry = "scripts/frame-passage.js", imports = { "@base/cinematic-film" = "module:cinematic-film", "@base/film-surface" = "module:film-surface" } }
+
+[components.directory]
+template = "components/directory.html"
+arguments = { type = "object", additionalProperties = false }
+
+[components.directory-entry]
+template = "components/directory-entry.html"
+arguments = { type = "object", additionalProperties = false }
+
+[components.film-beat]
+template = "components/film-beat.html"
+arguments = { type = "object", additionalProperties = false }
+
+[components.film-frames]
+template = "components/film-frames.html"
+presentation_only = true
+arguments = { type = "object", additionalProperties = false, required = ["variant"], properties = { variant = { type = "string", enum = ["landscape", "portrait"], description = "Whether the enclosed frame links belong to the landscape or portrait film." } } }
+
+[components.film-still]
+template = "components/film-still.html"
+arguments = { type = "object", additionalProperties = false }
+
+[chrome.regions]
+"base:theme-credit" = "Carrier theme"
+"base:theme-repository" = "https://github.com/getHarshOnline/gazette-theme-carrier"

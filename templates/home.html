@@ -1,0 +1,10 @@
+{% extends "base/landing.html" %}
+{% block head_extra %}
+{{ super() }}
+{% include "carrier/partials/fonts.html" %}
+{% for resource in presentation.theme_resources %}
+  {% if resource.id == "image:film-grain" %}
+<template id="cinematic-material"><img src="{{ resource.url }}" alt="" aria-hidden="true"></template>
+  {% endif %}
+{% endfor %}
+{% endblock head_extra %}

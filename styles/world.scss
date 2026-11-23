@@ -1,0 +1,177 @@
+@use '../shared/typography';
+@use '../tokens/scss/layout';
+@use '../shared/optical';
+@use '../shared/navigation';
+@layer world {
+  :root[data-page-mode='home'] .publication-body:has(> [data-gazette-component='frame-passage']:last-child) { padding-block-end: 0; }
+}
+
+@layer world {
+  .publication-body > h2 { padding-block-start: var(--space-3); }
+  .publication-body a:not(:where(.primary-action a,.control)) { font-weight: var(--type-weight-display); }
+  :root[data-page-mode='home'] main { max-inline-size: none; padding: 0; }
+  :root[data-page-mode='home'] .publication-body { padding-block-end: var(--space-7); }
+  :root[data-page-mode='home'] .title-group { max-inline-size: var(--layout-field-max); margin-inline: auto; padding: var(--space-7) var(--layout-margin-max); }
+}
+
+@layer world {
+  main:has(.directory) { max-inline-size: var(--layout-field-max); }
+  .publication-body:has(> .directory) { display: grid; grid-template-columns: repeat(var(--layout-columns),minmax(0,1fr)); column-gap: var(--layout-column-gap); }
+  .directory { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; }
+  .directory > h1 { grid-column: 1 / 6; grid-row: 1; margin: 0; font-size: var(--type-size-display-1); }
+  .directory > p { grid-column: 7 / -1; grid-row: 1; max-inline-size: var(--layout-measure); margin: 0; align-self: start; }
+  .directory > h2 { grid-column: 1 / -1; margin-block: var(--space-section) var(--space-4); font-size: var(--type-size-body); @include typography.reading-face($weight: var(--type-weight-display)); }
+  .directory-entry { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-content: start; padding-block: var(--space-5); }
+  .directory-entry h3 { grid-column: 1 / 5; grid-row: 1 / 3; margin: 0; font-size: var(--type-size-display-2); line-height: var(--type-line-height-heading); }
+  .directory-entry h3 a { text-decoration: underline; text-decoration-color: var(--color-line); text-underline-offset: var(--space-1); }
+  .directory-entry h3 a:focus-visible { text-decoration: underline; text-decoration-color: var(--world-illumination-emission); }
+  @media (hover: hover) and (pointer: fine) { .directory-entry h3 a:hover { text-decoration: underline; text-decoration-color: var(--world-illumination-emission); } }
+  .directory-entry p { grid-column: 6 / -1; max-inline-size: var(--layout-measure); margin: 0; }
+  .directory-entry p + p { margin-block-start: var(--space-3); font-size: var(--type-size-body); }
+  @media (width < layout.$layout-breakpoint-navigation) {
+    main:has(.directory) { padding-inline: var(--space-5); }
+    .publication-body:has(> .directory) { display: block; }
+    .directory { display: block; }
+    .directory > h1 { font-size: var(--type-size-display-2); }
+    .directory > p { margin-block-start: var(--space-4); }
+    .directory > h2 { margin-block-start: var(--space-6); }
+    .directory-entry { display: block; }
+    .directory-entry h3 { font-size: var(--type-size-h3); margin-block-end: var(--space-4); }
+    .directory-entry p + p { margin-block-start: var(--space-3); }
+  }
+}
+
+@layer world {
+  .view-set--text { --view-choice-radius: calc(var(--target-project) / 2); --view-selected-ink: var(--color-paper); --view-selected-face: var(--color-ink); --view-selection-light: color-mix(in srgb,var(--world-illumination-emission),var(--world-light-sheet) calc(var(--world-illumination-emission-strength) * 100%)); --view-selection-bloom: 0 0 var(--world-illumination-emission-spread) var(--world-illumination-emission); }
+  .view-set--text > .view-set__views > .view > .view__panel > p { font-size: var(--type-size-body); }
+}
+
+// One optical functional plane; context supplies its light, not another anatomy.
+@layer world {
+  :root { --control-radius: calc(var(--target-project) / 2); --carrier-chrome-ink: var(--color-ink); --carrier-chrome-paper: var(--color-paper); --carrier-chrome-focus: var(--color-focus); }
+  @include navigation.capsule($ink: var(--carrier-chrome-ink), $paper: var(--carrier-chrome-paper), $focus: var(--carrier-chrome-focus));
+}
+
+
+@layer world {
+}
+
+@layer world {
+  :root[data-page-mode='home'] main:has(.carrier-film) { max-inline-size: none; padding: 0; margin-block: 0; }
+  .publication-layout:has(.carrier-film) { display: block; }
+  .publication-body:has(.carrier-film) { max-inline-size: none; }
+  [data-gazette-component='frame-passage'] { color: var(--world-dark-ink); background: var(--world-dark-paper); }
+  .carrier-film {
+    .cinematic-still::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg,color-mix(in srgb,var(--world-dark-paper) calc(var(--material-film-scrim) * 100%),transparent),color-mix(in srgb,var(--world-dark-paper) calc(var(--material-film-scrim-mid) * 100%),transparent) calc(var(--material-film-scrim-mid-stop) * 100%),transparent calc(var(--material-film-scrim-clear-stop) * 100%)),linear-gradient(180deg,color-mix(in srgb,var(--world-dark-paper) calc(var(--material-film-scrim-top) * 100%),transparent),transparent calc(var(--material-film-scrim-top-clear) * 100%)); pointer-events: none; }
+    .cinematic-beat { display: grid; grid-template-columns: minmax(0,1fr) var(--layout-film-premise-width); align-content: end; align-items: end; gap: var(--space-6); min-block-size: 100svh; padding: var(--space-section) var(--space-5) var(--space-6);  }
+    .cinematic-title, .cinematic-title :is(h1,h2) { margin: 0; max-inline-size: none; font-size: clamp(var(--layout-film-headline-min),calc(100vw * var(--layout-film-headline-fluid)),var(--layout-film-headline-max)); line-height: var(--type-line-height-display); letter-spacing: var(--type-tracking-display); text-wrap: balance; }
+    .cinematic-title :is(span,em) { display: block; }
+    .cinematic-title em { @include typography.reading-face(); font-style: italic; }
+    .cinematic-premise { align-self: end; font-size: var(--type-film-premise); line-height: var(--type-film-line-height); }
+    .cinematic-premise p { margin: 0; }
+    .cinematic-premise p + p { margin-block-start: var(--space-2); }
+    a:not(:where(.primary-action a)) { color: inherit; }
+    .cinematic-premise > p > a, .cinematic-card a { display: inline-flex; align-items: center; min-block-size: var(--target-project); text-decoration: none; border-block-end: var(--stroke-hair) solid currentColor; gap: var(--space-3); }
+    .cinematic-premise > p > a::after, .cinematic-card a::after { content: '↗'; transition: transform var(--duration-feedback) var(--easing-productive); }
+    @media (hover: hover) and (pointer: fine) { .cinematic-premise > p > a:hover::after, .cinematic-card a:hover::after { transform: translateX(var(--space-1)); } }
+    --focus-ring-color: var(--world-dark-focus);
+
+    .cinematic-card { inline-size: min(100%,var(--layout-film-card-width)); position: relative; padding: var(--layout-film-card-inset-start) var(--layout-film-card-inset) var(--layout-film-card-inset); }
+    .cinematic-card h3 a { border: 0; min-block-size: 0; }
+    .cinematic-card h3 a::before { content: ''; position: absolute; inset: 0; border-radius: inherit; }
+    .cinematic-card h3 { margin: 0 0 var(--space-2); font-size: var(--type-film-card-title); line-height: var(--type-line-height-heading); }
+    .cinematic-card p { margin: 0; font-size: var(--type-film-card-body); line-height: var(--type-film-line-height); }
+    .cinematic-card p + p { margin-block-start: var(--space-3); }
+  }
+  [data-island-state='drawn'] .carrier-film {
+    .cinematic-beat { background: none; }
+    .cinematic-stage { background: linear-gradient(0deg,color-mix(in srgb,var(--world-dark-paper) calc(var(--material-film-scrim) * 100%),transparent),color-mix(in srgb,var(--world-dark-paper) calc(var(--material-film-scrim-mid) * 100%),transparent) calc(var(--material-film-scrim-mid-stop) * 100%),transparent calc(var(--material-film-scrim-clear-stop) * 100%)),linear-gradient(180deg,color-mix(in srgb,var(--world-dark-paper) calc(var(--material-film-scrim-top) * 100%),transparent),transparent calc(var(--material-film-scrim-top-clear) * 100%)); }
+    .cinematic-card { position: absolute; inset-inline-start: var(--space-5); inset-block-start: calc(100svh * var(--layout-film-card-first-top)); }
+    .cinematic-card + .cinematic-card { inset-inline-start: auto; inset-inline-end: var(--space-5); inset-block-start: calc(100svh * var(--layout-film-card-second-top)); }
+  }
+  :root[data-page-mode='home']:has(.carrier-film) {
+    --carrier-chrome-ink: var(--world-dark-ink);
+    --carrier-chrome-paper: var(--world-dark-paper);
+    --carrier-chrome-focus: var(--world-dark-focus);
+    scroll-padding-block-start: 0;
+    body { background: var(--world-dark-paper); }
+    .frame__header { padding-inline: var(--space-5); }
+    .frame__header[data-navigation-mode] { position: fixed; inset-inline: 0; inset-block-start: 0; }
+    @include navigation.film-legibility($paper: var(--world-dark-paper));
+    // Without the drawn film the still storyboard scrolls under the fixed header;
+    // a fading bed keeps the scene visible behind the masthead.
+    &:not(:has([data-island-state='drawn'] .carrier-film)) .frame__header { background: linear-gradient(var(--world-dark-paper),transparent); }
+  }
+  @media (width < layout.$layout-breakpoint-wide) {
+    .carrier-film .cinematic-beat { grid-template-columns: minmax(0,1fr); align-content: end; gap: var(--space-5); }
+    .carrier-film .cinematic-premise { max-inline-size: var(--layout-film-premise-width); }
+    [data-island-state='drawn'] .carrier-film .cinematic-card { inset-block-start: calc(100svh * var(--layout-film-phone-card-top)); }
+    [data-island-state='drawn'] .carrier-film .cinematic-card + .cinematic-card { inset-block-start: calc(100svh * var(--layout-film-phone-card-top) + var(--layout-film-phone-card-step)); }
+  }
+  @media print {
+    :root[data-page-mode='home']:has(.carrier-film) body { background: var(--color-paper); color: var(--color-ink); }
+    [data-gazette-component='frame-passage'] { background: transparent; color: var(--color-ink); }
+    .carrier-film .cinematic-beat { display: block; min-block-size: 0; color: var(--color-ink); background: none; }
+    .carrier-film .cinematic-still::after { display: none; }
+    .carrier-film .cinematic-title, .carrier-film .cinematic-title :is(h1,h2) { font-size: var(--type-size-h2); }
+    .carrier-film .cinematic-premise { max-inline-size: none; }
+    .carrier-film .cinematic-card { position: static !important; inline-size: auto; margin-block: var(--space-5); backdrop-filter: none; background: none; color: inherit; box-shadow: none; border-color: var(--color-line); }
+  }
+  :root[data-motion='reduce'] .carrier-film a::after { transition: none; transform: none; }
+  @media (prefers-reduced-motion: reduce) { :root:not([data-motion='allow']) .carrier-film a::after { transition: none; transform: none; } }
+}
+
+
+@layer world {
+  :root[data-page-mode='home']:has(.carrier-film) .publication-body { padding-block-end: 0; }
+  .frame__footer { background: var(--world-dark-paper); color: var(--world-dark-ink); }
+  .frame__footer-description { font-size: var(--type-film-premise); color: var(--world-dark-muted); }
+  .frame__footer a,.frame__footer dt { color: inherit; }
+  .frame__footer { --focus-ring-color: var(--world-dark-focus); }
+}
+
+@layer world {
+  .control--primary,.control--navigation,.primary-action a {
+    --control-primary-border: 0;
+    --control-primary-duration: var(--motion-primary-action-duration);
+    --control-primary-hover-transform: translateY(var(--motion-primary-action-lift));
+  }
+}
+
+// Functional shelves share a contour and optical depth; text inside stays on one plane.
+@layer world {
+  :is(.shell__dialog,.connection-shortcuts,.view-set--text > .view-set__views,.work-connections) {
+    @include optical.layer(
+      $face: color-mix(in srgb,var(--color-sheet) calc(var(--world-material-optical-fill) * 100%),transparent),
+      $filter: blur(var(--world-material-optical-blur)) Saturate(var(--world-material-optical-saturation)),
+      $solid: var(--color-sheet));
+  }
+  :is(.connection-shortcuts,.view-set--text > .view-set__views,.work-connections) { @include optical.frame; }
+  .connection-shortcuts { padding: var(--space-2) var(--space-4); }
+  .connection-shortcuts ul { gap: var(--space-2) var(--space-5); }
+  .connection-shortcuts a { @include typography.reading-face(); }
+  $shell-depth: (0 var(--elevation-shell-offset-y) var(--elevation-shell-blur) color-mix(in srgb,var(--color-shadow) calc(var(--elevation-shell-opacity) * 100%),transparent),0 var(--elevation-shell-contact-offset-y) var(--elevation-shell-contact-blur) color-mix(in srgb,var(--color-shadow) calc(var(--elevation-shell-contact-opacity) * 100%),transparent));
+  .shell__dialog { @include optical.frame($depth: $shell-depth); --shell-padding: var(--space-5); }
+  // The search picker floats like the shell, so it casts the same depth over its opaque bed.
+  @supports (appearance: base-select) { .search-page select::picker(select) { @include optical.frame($depth: $shell-depth, $radius: var(--radius-preview-frame)); } }
+  .shell__dialog::backdrop { background: color-mix(in srgb,var(--color-metal) calc(var(--material-scrim-opacity) * 100%),transparent); }
+  .control--secondary { --control-font-family: var(--type-family-reading); }
+  .shell__tenant { margin-block-start: var(--space-5); }
+  .shell__label { font-size: var(--type-size-meta); color: var(--color-muted); }
+  .shell__tenant input[type='search'] { padding-inline: var(--space-4); background: transparent; font-size: var(--type-size-body); }
+  .shell__tenant[data-tenant='search'] .shell__status { font-size: var(--type-size-body); color: var(--color-muted); }
+  .shell__results > li,.shell__results [role='option'] { border: 0; }
+  .shell__results [role='option'] { border-radius: var(--world-material-optical-radius); }
+  .shell__results [aria-selected='true'] { background: var(--color-tint); }
+  .shell__setting { font-size: var(--type-size-body); }
+  .shell__setting legend { @include typography.reading-face($weight: var(--type-weight-display)); }
+  :root:has(.shell__dialog[open]) .connection-shortcuts { backdrop-filter: none; background: var(--color-sheet); }
+  @media print { :is(.reading-context ol,.connection-shortcuts,.view-set--text > .view-set__views,.work-connections) { border: 0; border-radius: 0; background: transparent; box-shadow: none; backdrop-filter: none; } }
+}
+
+@layer world {
+  .cinematic-card,.preview-caption { @include optical.frame($ink: var(--world-dark-ink), $reflection: var(--world-dark-ink), $depth: (0 var(--elevation-film-offset-y) var(--elevation-film-blur) var(--elevation-film-spread) color-mix(in srgb,var(--world-dark-paper) calc(var(--elevation-film-opacity) * 100%),transparent))); }
+  .preview-caption { @include optical.layer($face: color-mix(in srgb,var(--world-dark-ink) calc(var(--world-material-optical-scene-fill) * 100%),transparent), $filter: blur(var(--world-material-optical-blur)) Saturate(var(--world-material-optical-saturation)), $solid: var(--world-dark-metal)); }
+  .cinematic-card { @include optical.layer($face: color-mix(in srgb,var(--world-dark-paper) calc(var(--material-film-scrim) * 100%),transparent), $filter: blur(var(--world-material-optical-blur)) Saturate(var(--world-material-optical-saturation)), $solid: var(--world-dark-metal)); }
+  @media print { .cinematic-card,.preview-caption { border-color: var(--color-line); color: var(--color-ink); background: transparent; box-shadow: none; backdrop-filter: none; } }
+}

@@ -105,8 +105,17 @@
   @media (width < layout.$layout-breakpoint-wide) {
     .carrier-film .cinematic-beat { grid-template-columns: minmax(0,1fr); align-content: end; gap: var(--space-5); }
     .carrier-film .cinematic-premise { max-inline-size: var(--layout-film-premise-width); }
-    [data-island-state='drawn'] .carrier-film .cinematic-card { inset-block-start: calc(100svh * var(--layout-film-phone-card-top)); }
-    [data-island-state='drawn'] .carrier-film .cinematic-card + .cinematic-card { inset-block-start: calc(100svh * var(--layout-film-phone-card-top) + var(--layout-film-phone-card-step)); }
+    [data-island-state='drawn'] .carrier-film .cinematic-beat:has(> .cinematic-card) {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      padding-block-start: calc(100svh * var(--layout-film-phone-card-top));
+      // Give both invitations their full height before reserving the closing copy.
+      .cinematic-card { position: relative; inset: auto; order: -1; align-self: start; flex: none; }
+      .cinematic-card + .cinematic-card { align-self: end; }
+      .cinematic-title { margin-block-start: auto; }
+      .cinematic-premise { align-self: start; }
+    }
   }
   @media print {
     :root[data-page-mode='home']:has(.carrier-film) body { background: var(--color-paper); color: var(--color-ink); }

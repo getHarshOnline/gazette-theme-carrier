@@ -117,6 +117,14 @@
       .cinematic-premise { align-self: start; }
     }
   }
+  @media (width < layout.$layout-breakpoint-wide) and (height < 49rem) {
+    [data-island-state='drawn'] .carrier-film .cinematic-beat:has(> .cinematic-card) {
+      padding-block: max(var(--frame-chrome), env(safe-area-inset-top)) max(var(--space-3), env(safe-area-inset-bottom));
+      gap: var(--space-2);
+      .cinematic-card { padding: var(--space-2) var(--space-3); }
+      .cinematic-title :is(h1,h2) { font-size: var(--type-size-display-2); }
+    }
+  }
   @media print {
     :root[data-page-mode='home']:has(.carrier-film) body { background: var(--color-paper); color: var(--color-ink); }
     [data-gazette-component='frame-passage'] { background: transparent; color: var(--color-ink); }

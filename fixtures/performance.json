@@ -1,0 +1,8 @@
+{
+  "home": {
+    "label": "Film passage",
+    "regions": [".carrier-film"],
+    "minimumRegions": 1,
+    "framePattern": "/c[0-9]+\\.webp$"
+  }
+}

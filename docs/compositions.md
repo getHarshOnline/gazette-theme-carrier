@@ -63,3 +63,7 @@ The colophon inherits Base's responsive footer grid, identity measure and destin
 The authored account uses its source headings. Base retains a hidden document title when the body has no H1, so navigation and metadata keep the page identity.
 
 Part of [gazette-theme-carrier](../README.md).
+
+## Performance fixture
+
+The film passage fixture selects Carrier’s frame-driven opening. Base measures forward and reverse scrolling and counts requests for the delivered canyon frames. The composing workspace chooses the served page and browser conditions. [Theme fixture](../fixtures/performance.json)
